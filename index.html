@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre Sašku 💗</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  font-family: "Segoe UI", sans-serif;
+  color: #54243b;
+  background: linear-gradient(135deg, #ffe1ec, #f7cce2, #e9d9ff);
+}
+
+.card {
+  width: min(100%, 540px);
+  padding: 38px 26px;
+  text-align: center;
+  border-radius: 28px;
+  background: rgba(255,255,255,.9);
+  box-shadow: 0 20px 65px #a34c7628;
+}
+
+.emoji { font-size: 44px; }
+
+h1 { font-size: 32px; }
+
+p { color: #87546d; line-height: 1.6; }
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 24px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.yes {
+  background: linear-gradient(135deg, #ff5c9a, #e83e83);
+  color: white;
+}
+
+.no, .choice {
+  background: #ffe5ef;
+  color: #a83368;
+}
+
+.choice.selected {
+  color: white;
+  background: #e94c8a;
+}
+
+.hidden { display: none; }
+
+.choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.poem {
+  margin: 22px auto;
+  padding: 19px;
+  border-radius: 20px;
+  background: #fff0f6;
+  color: #81415f;
+  font-style: italic;
+  line-height: 1.85;
+}
+
+.signature {
+  margin-top: 25px;
+  padding-top: 22px;
+  border-top: 1px solid #f2c6d9;
+}
+
+input {
+  width: 90%;
+  padding: 13px;
+  border-radius: 14px;
+  border: 1px solid #e9a9c4;
+  font-size: 16px;
+}
+
+.signed {
+  color: #d83e7e;
+  font-family: cursive;
+  font-size: 27px;
+}
+
+</style>
+</head>
+
+<body>
+
+<main class="card">
+
+<section id="questionScreen">
+  <div class="emoji">🥺💗</div>
+  <h1 id="question">Saška, ľúbiš ma?</h1>
+  <p id="subtitle">Mám pre teba jednu veľmi dôležitú otázku…</p>
+
+  <button class="yes" id="yesBtn">Áno 💖</button>
+  <button class="no" id="noBtn">Nie 🙈</button>
+</section>
+
+<section id="choiceScreen" class="hidden">
+  <div class="emoji">🥰</div>
+  <h1>Čo ľúbiš na mne?</h1>
+  <p>Vyber, čo sa ti na mne páči. Môžeš si vybrať aj viac možností. 💕</p>
+
+  <div class="choices">
+    <button class="choice">Povaha 🌷</button>
+    <button class="choice">Humor 😂</button>
+    <button class="choice">Úspech ⭐</button>
+    <button class="choice">Úsmev 😊</button>
+    <button class="choice">Oči 👀</button>
+    <button class="choice">Moje objatia 🤗</button>
+    <button class="choice">Úplne všetko 💗</button>
+  </div>
+
+  <p id="choiceHint">Vyber aspoň jednu možnosť.</p>
+  <button class="yes" id="continueBtn">Pokračovať 💘</button>
+</section>
+
+<section id="finalScreen" class="hidden">
+
+  <div class="emoji">💘😘💘</div>
+  <h1 style="color:#df3e80">Aj ja ťa ľúbim veľmi, Saška!</h1>
+  <p>Pus pus 😚💕 Si pre mňa veľmi výnimočná.</p>
+
+  <div class="poem">
+    Saška moja, krásny kvietok,<br>
+    s tebou krajší je každý deň.<br>
+    Tvoj úsmev mi vždy rozžiari svet,<br>
+    pri tebe chcem byť zas a znova len.<br><br>
+
+    Ľúbim tvoju dušu, smiech aj oči,<br>
+    nech nás láska nikdy neopustí.<br>
+    Nech kráčame spolu, ruka v ruke,<br>
+    navždy ty a ja — v každej chvíľke. 💗
+  </div>
+
+  <div class="signature" id="signArea">
+    <h2>Naša malá dohoda 💍</h2>
+    <p>Sľúbime si, že budeme navždy spolu?</p>
+    <p>Napíš svoje meno a potvrď náš sľub. ❤️</p>
+
+    <input id="signName" type="text" placeholder="Tvoje meno…">
+    <br><br>
+
+    <button class="yes" id="signBtn">
+      Sľubujem, navždy spolu ❤️
+    </button>
+  </div>
+
+  <div id="signedResult" class="hidden">
+    <div class="emoji">💞</div>
+    <h2>Platí! Navždy spolu. 🥹</h2>
+    <p>Náš sľub je spečatený láskou.</p>
+    <div class="signed" id="signatureText"></div>
+    <p>Pus pus, Saška. Ľúbim ťa! ❤️</p>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+
+const questions = [
+  "Určite? 🥺",
+  "Naozaj naozaj? 🥹",
+  "A nechceš si to ešte rozmyslieť? 💗",
+  "Ale no táák, Saška… ľúbiš ma? 🥰",
+  "Posledná šanca… si si istá? 😘"
+];
+
+let noCount = 0;
+const selected = new Set();
+
+const questionScreen = document.getElementById("questionScreen");
+const choiceScreen = document.getElementById("choiceScreen");
+const finalScreen = document.getElementById("finalScreen");
+
+const yesBtn = document.getElementById("yesBtn");
+
+yesBtn.addEventListener("click", () => {
+  questionScreen.classList.add("hidden");
+  choiceScreen.classList.remove("hidden");
+});
+
+document.getElementById("noBtn").addEventListener("click", () => {
+
+  document.getElementById("question").textContent =
+    questions[noCount % questions.length];
+
+  noCount++;
+
+  document.getElementById("subtitle").textContent =
+    "Skús ešte raz kliknúť na Áno… 💞";
+
+  yesBtn.style.transform =
+    `scale(${Math.min(1 + noCount * 0.045, 1.35)})`;
+});
+
+document.querySelectorAll(".choice").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const value = button.textContent;
+
+    if (selected.has(value)) {
+      selected.delete(value);
+      button.classList.remove("selected");
+    } else {
+      selected.add(value);
+      button.classList.add("selected");
+    }
+
+    document.getElementById("choiceHint").textContent =
+      selected.size
+        ? "Vybrané: " + [...selected].join(", ")
+        : "Vyber aspoň jednu možnosť.";
+  });
+
+});
+
+document.getElementById("continueBtn").addEventListener("click", () => {
+
+  if (!selected.size) {
+    document.getElementById("choiceHint").textContent =
+      "Vyber aspoň jednu možnosť, prosím. 💗";
+    return;
+  }
+
+  choiceScreen.classList.add("hidden");
+  finalScreen.classList.remove("hidden");
+
+});
+
+document.getElementById("signBtn").addEventListener("click", () => {
+
+  const name = document.getElementById("signName").value.trim();
+
+  if (!name) {
+    document.getElementById("signName").focus();
+    return;
+  }
+
+  document.getElementById("signatureText").textContent =
+    "S láskou, " + name + " ❤️";
+
+  document.getElementById("signArea").classList.add("hidden");
+  document.getElementById("signedResult").classList.remove("hidden");
+
+});
+
+</script>
+
+</body>
+</html>
